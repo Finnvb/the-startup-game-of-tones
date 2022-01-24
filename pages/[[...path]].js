@@ -46,11 +46,10 @@ export async function getStaticProps({ params }) {
     let content;
     let serialized;
 
-    // console.log(params.path);
-    // console.log();
+
     if (params.path.some((path) => path.includes("volume"))) {
         // its a volume or inside a volume
-        // console.log(params.path.length);
+
         switch (params.path.length) {
             case 1: // its a volume index
                 data = await getSanityContent({
@@ -61,9 +60,9 @@ export async function getStaticProps({ params }) {
                         }
                       }`,
                 });
-                // console.log(params.path[0]);
+   
                 vol_idx = params.path[0].replace("volume_", "") - 1;
-                // console.log(data.allVolume[vol_idx]);
+      
                 content = data.allVolume[vol_idx].intro;
                 serialized = await serialize(content.content);
                 props = {
@@ -81,10 +80,10 @@ export async function getStaticProps({ params }) {
                         }
                       }`,
                 });
-                // console.log(params.path[0]);
+    
                 vol_idx = params.path[0].replace("volume_", "") - 1;
                 chap_idx = params.path[1].replace("chapter_", "") - 1;
-                // console.log(chap_idx);
+   
 
                 content = data.allVolume[vol_idx].chapters[chap_idx].intro;
                 serialized = await serialize(content.content);
@@ -107,11 +106,11 @@ export async function getStaticProps({ params }) {
                         }
                       }`,
                 });
-                // console.log(params.path[0]);
+    
                 vol_idx = params.path[0].replace("volume_", "") - 1;
                 chap_idx = params.path[1].replace("chapter_", "") - 1;
                 sub_idx = params.path[2].replace("subchapter_", "") - 1;
-                // console.log(chap_idx);
+    
 
                 content =
                     data.allVolume[vol_idx].chapters[chap_idx].subchapters[
@@ -140,12 +139,12 @@ export async function getStaticProps({ params }) {
                         }
                       }`,
                 });
-                // console.log(params.path[0]);
+  
                 vol_idx = params.path[0].replace("volume_", "") - 1;
                 chap_idx = params.path[1].replace("chapter_", "") - 1;
                 sub_idx = params.path[2].replace("subchapter_", "") - 1;
                 les_type = params.path[3];
-                // console.log();
+
                 content =
                     data.allVolume[vol_idx].chapters[chap_idx].subchapters[
                         sub_idx
@@ -192,8 +191,7 @@ export async function getStaticPaths() {
 
     const paths = [];
 
-    // paths.push(({ params: { path: "howdie" } }))
-    // console.log(data.allVolume)
+
 
     data.allVolume.map((vol, i) => {
         let vol_path = `volume_${i + 1}`;
@@ -235,7 +233,7 @@ export async function getStaticPaths() {
         });
     });
 
-    // console.log(paths);
+
 
     return {
         paths: [...paths],

@@ -9,7 +9,7 @@ usp2.addEventListener("click", changeText);
 usp3.addEventListener("click", changeText);
 
 function changeText(event) {
-  // console.log(event.target.id);
+
   if (event.target.id == "usp1") {
     uspText.innerHTML =
       "<span>Aqcuire</span> the <span>tools</span> to <span>discover</span><br> and <span>express</span> your<span> own musical style</span>";
