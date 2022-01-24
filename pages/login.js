@@ -2,7 +2,7 @@ import Head from "next/head";
 import styles from "../styles/LoginPage.module.css";
 import { useState, useRef } from "react";
 import axios from "axios";
-import { getSession, getCsrfToken } from "next-auth/react";
+import { getSession, getCsrfToken, signIn } from "next-auth/react";
 
 const LoginPage = ({ csrfToken }) => {
     const [isSuccessUser, setSuccessUser] = useState(false);
@@ -16,7 +16,7 @@ const LoginPage = ({ csrfToken }) => {
     const passRef = useRef(null);
 
     const signIn = async (data) => {
-        const res = await axios.post("/api/signIn", {
+        const res = await axios.post("/api/auth/Credentials", {
             ...data,
         });
 
