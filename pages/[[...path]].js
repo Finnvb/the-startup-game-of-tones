@@ -176,10 +176,10 @@ export async function getStaticPaths() {
                 chapters{
                     intro{title, color, content},
                     subchapters{
-                    theory{title, color, content}
-                    practice{title, color, content}
-                    action{title, color, content}
-                    exercise{title, color, content}
+                        theory{title, color, content}
+                        practice{title, color, content}
+                        action{title, color, content}
+                        exercise{title, color, content}
                     }
                 }
             }

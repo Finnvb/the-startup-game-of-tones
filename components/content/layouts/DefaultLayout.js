@@ -21,6 +21,10 @@ const DefaultLayout = ({ children }) => {
     return (
         <section className="w-full h-full relative">
             <main>{children}</main>
+            <a className="continueContainer" id="nextChapterLink" href="#">
+                <p id="nextChapter">Continue</p>
+                <img src="/icons/arrow-right.svg" alt="arrow to next chapter" />
+            </a>
             <nav className="absolute right-0 top-1/2 -translate-y-1/2">
                 <SvgComponent config={config} />
             </nav>

@@ -7,6 +7,7 @@ import { getSession, getCsrfToken } from "next-auth/react";
 import { getToken } from "next-auth/jwt";
 import { client } from "./api/sanity";
 import { getUserByEmailQuery } from "./api/auth/queries";
+import Les from "../components/layouts/Les";
 
 const recordingsPage = (props) => {
     const { data: session, status } = useSession();
@@ -25,17 +26,90 @@ const recordingsPage = (props) => {
         );
     }
 
- 
-
     const togglePlay = (e) =>
         e.currentTarget.querySelector("audio").paused
             ? e.currentTarget.querySelector("audio").play()
             : e.currentTarget.querySelector("audio").pause();
     return (
         <>
+            <Les sideBarTitle="Recordings" type="mixed">
+                <main className={styles.main}>
+                    <a href="#" className={styles.backContainer}>
+                        <img
+                            src={"/icons/arrow-left.svg"}
+                            alt="arrow left"
+                        ></img>
+                        <p>Back</p>
+                    </a>
 
+                    <header>
+                        <h1 className={styles.chapterHeader}>My Recordings</h1>
+                    </header>
 
-            <nav className={styles.topBar}>
+                    <ul className={styles.recordings}>
+                        {recordings ? (
+                            recordings.map((record, i) => {
+                                let url = record.asset.url;
+
+                                return (
+                                    <li className={styles.recording} key={i}>
+                                        <div
+                                            className={
+                                                styles.recordingGridItem1
+                                            }
+                                        >
+                                            Chapter 1.1 <br />{" "}
+                                            <span className={styles.spanItem}>
+                                                Exercise 1
+                                            </span>
+                                        </div>
+                                        <div
+                                            className={
+                                                styles.recordingGridItem2
+                                            }
+                                            onClick={(e) => togglePlay(e)}
+                                        >
+                                            <audio>
+                                                <source src={url}></source>
+                                            </audio>
+                                            <img
+                                                className={styles.recordingSVG}
+                                                src={"/icons/play-button.svg"}
+                                                alt="play button"
+                                            ></img>
+                                        </div>
+
+                                        <div
+                                            className={
+                                                styles.recordingGridItem3
+                                            }
+                                        >
+                                            <img
+                                                className={styles.recordingSVG}
+                                                src={"/icons/trash-can.svg"}
+                                                alt="trashcan"
+                                            ></img>
+                                        </div>
+                                        <div
+                                            className={styles.recordingGridItem}
+                                        ></div>
+                                        <div
+                                            className={
+                                                styles.recordingGridItem4
+                                            }
+                                        >
+                                            Go to exercise
+                                        </div>
+                                    </li>
+                                );
+                            })
+                        ) : (
+                            <li>You have no recordings</li>
+                        )}
+                    </ul>
+                </main>
+            </Les>
+            {/* <nav className={styles.topBar}>
                 <div className={styles.circleIcon}>
                     <img src={"./icons/music-note2.svg"} alt="music-note"></img>
                 </div>
@@ -57,67 +131,7 @@ const recordingsPage = (props) => {
                 <p>Menu</p>
 
                 <h2 className={styles.sideBarItem1}>My Recordings</h2>
-            </aside>
-
-            <main className={styles.main}>
-                <a href="#" className={styles.backContainer}>
-                    <img src={"/icons/arrow-left.svg"} alt="arrow left"></img>
-                    <p>Back</p>
-                </a>
-
-                <header>
-                    <h1 className={styles.chapterHeader}>My Recordings</h1>
-                </header>
-
-                <ul className={styles.recordings}>
-                    {recordings ? (
-                        recordings.map((record, i) => {
-                            let url = record.asset.url;
-   
-
-                            return (
-                                <li className={styles.recording} key={i}>
-                                    <div className={styles.recordingGridItem1}>
-                                        Chapter 1.1 <br />{" "}
-                                        <span className={styles.spanItem}>
-                                            Exercise 1
-                                        </span>
-                                    </div>
-                                    <div
-                                        className={styles.recordingGridItem2}
-                                        onClick={(e) => togglePlay(e)}
-                                    >
-                                        <audio>
-                                            <source src={url}></source>
-                                        </audio>
-                                        <img
-                                            className={styles.recordingSVG}
-                                            src={"/icons/play-button.svg"}
-                                            alt="play button"
-                                        ></img>
-                                    </div>
-
-                                    <div className={styles.recordingGridItem3}>
-                                        <img
-                                            className={styles.recordingSVG}
-                                            src={"/icons/trash-can.svg"}
-                                            alt="trashcan"
-                                        ></img>
-                                    </div>
-                                    <div
-                                        className={styles.recordingGridItem}
-                                    ></div>
-                                    <div className={styles.recordingGridItem4}>
-                                        Go to exercise
-                                    </div>
-                                </li>
-                            );
-                        })
-                    ) : (
-                        <li>You have no recordings</li>
-                    )}
-                </ul>
-            </main>
+            </aside> */}
         </>
     );
 };
@@ -141,8 +155,6 @@ export async function getServerSideProps(ctx) {
             }
           }`,
     });
-
-
 
     return {
         props: { recordings: data.User.recordings }, // will be passed to the page component as props

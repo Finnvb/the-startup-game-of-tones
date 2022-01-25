@@ -3,8 +3,10 @@ import styles from "../styles/LoginPage.module.css";
 import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { getSession, getCsrfToken, signIn } from "next-auth/react";
+import { useRouter } from "next/router";
 
 const LoginPage = ({ csrfToken }) => {
+    const router = useRouter();
     const [isSuccessUser, setSuccessUser] = useState(false);
     const [isSuccessPass, setSuccessPass] = useState(false);
     const [hasFocussedUser, setHasFocussedUser] = useState(false);
@@ -49,12 +51,18 @@ const LoginPage = ({ csrfToken }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        // console.log("submitted");
 
         if (isSuccessUser && isSuccessPass) {
             let email = emailValue;
             let password = passwordValue;
+            console.log("signin in...\n");
 
-            signIn("credentials", { email: email, password: password });
+            signIn("credentials", {
+                email: email,
+                password: password,
+                callbackUrl: "/profile",
+            });
         }
     };
 

@@ -28,7 +28,7 @@ const Les = ({ children, sideBarTitle, type }) => {
             }}
         >
             <div
-                className={`${color.bgColor} col-span-1 row-start-1 row-end-3 flex items-center justify-between flex-col`}
+                className={`${color.bgColor} col-span-1 row-start-1 row-end-3 flex items-center justify-between flex-col fixed left-0 top-0 h-full w-[60px] z-10`}
             >
                 <header className="mt-3">
                     <Link href="/home">
@@ -50,7 +50,7 @@ const Les = ({ children, sideBarTitle, type }) => {
             </div>
 
             <div
-                className={`${color.bgColorLight} col-start-2 col-end-3 row-span-1 flex flex-row justify-end items-center`}
+                className={`${color.bgColorLight} col-start-2 col-end-3 row-span-1 flex flex-row justify-end items-center fixed left-0 top-0 w-full h-[60px] z-0`}
             >
                 <ul className="flex flex-row items-center mx-2">
                     <li className="rounded-full p-3 bg-white cursor-pointer">
@@ -80,59 +80,10 @@ const Les = ({ children, sideBarTitle, type }) => {
                 </ul>
             </div>
 
-            <div className="col-start-2 col-end-3 row-start-2 row-end-3 w-full h-full p-5 bg-gray-100 bg-opacity-75">
+            <div className="col-start-2 col-end-3 row-start-2 row-end-3 w-full h-full p-5 bg-gray-300 bg-opacity-75">
                 {children}
-                <a className="continueContainer" id="nextChapterLink" href="#">
-                    <p id="nextChapter">Continue</p>
-                    <img
-                        src="/icons/arrow-right.svg"
-                        alt="arrow to next chapter"
-                    />
-                </a>
             </div>
         </div>
-
-        // <>
-        //     <nav className={`${color.bgColorLight} topBar`} id="topBar">
-        //         <div className="circleIcon">
-        // <img src="/icons/music-note2.svg" alt="music-note" />
-        //         </div>
-        //         <div>
-        //             <hr />
-        //         </div>
-        //         <div className="circleIcon">
-        //             {" "}
-        //             <img src="/icons/profile.svg" alt="profile" />
-        //         </div>
-        //     </nav>
-
-        //     <aside className={`${color.bgColor} sideBar`} id="sideBar">
-        //         <a href="/icons/home.html">
-        //             <img
-        //                 className="sideBarItem"
-        //                 src="/icons/menu-button.svg"
-        //                 alt="menu-button"
-        //             />
-        //         </a>
-        //         <p id="menuButtonText">Menu</p>
-
-        //         <h2 className="sideBarItem1" id="sideBartext">
-        //             {sideBarTitle}
-        //         </h2>
-        //     </aside>
-
-        //     <main className="main">
-        //         {children}
-
-        //         <a className="continueContainer" id="nextChapterLink" href="#">
-        //             <p id="nextChapter">Continue</p>
-        //             <img
-        //                 src="/icons/arrow-right.svg"
-        //                 alt="arrow to next chapter"
-        //             />
-        //         </a>
-        //     </main>
-        // </>
     );
 };
 
