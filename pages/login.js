@@ -1,6 +1,6 @@
 import Head from "next/head";
 import styles from "../styles/LoginPage.module.css";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import axios from "axios";
 import { getSession, getCsrfToken, signIn } from "next-auth/react";
 
@@ -11,17 +11,10 @@ const LoginPage = ({ csrfToken }) => {
     const [hasFocussedPass, setHasFocussedPass] = useState(false);
     const [emailValue, setEmail] = useState("");
     const [passwordValue, setPassword] = useState("");
+    const submitRef = useRef(null);
 
     const userRef = useRef(null);
     const passRef = useRef(null);
-
-    const signIn = async (data) => {
-        const res = await axios.post("/api/auth/Credentials", {
-            ...data,
-        });
-
-        return res.data;
-    };
 
     const validateUser = (e) => {
         setEmail(userRef.current.value);
@@ -46,27 +39,29 @@ const LoginPage = ({ csrfToken }) => {
         }
     };
 
+    // useEffect(() => {
+    //     if (isSuccessUser && isSuccessPass) {
+    //         submitRef.current.disabled = false;
+    //     } else {
+    //         submitRef.current.disabled = true;
+    //     }
+    // }, [isSuccessUser, isSuccessPass]);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-
         if (isSuccessUser && isSuccessPass) {
-
             let email = emailValue;
             let password = passwordValue;
-            const user = await signIn({
-                email,
-                password,
-            });
 
-            console.log(user);
+            signIn("credentials", { email: email, password: password });
         }
     };
 
     return (
         <>
             <Head>
-                <script src="/formValidation.js" defer></script>
+                <script src="/scripts/formValidation.js" defer></script>
             </Head>
 
             <main className={styles.container}>
@@ -104,6 +99,8 @@ const LoginPage = ({ csrfToken }) => {
                     className={styles.formContainer}
                     id="form"
                     name="myForm"
+                    // method="post"
+                    // action="/api/auth/callback/credentials"
                     onSubmit={handleSubmit}
                 >
                     <div className={styles.inputControl}>
@@ -181,6 +178,7 @@ const LoginPage = ({ csrfToken }) => {
                     </a>
                     <input
                         type="submit"
+                        ref={submitRef}
                         id="inlogButton"
                         value="SIGN IN"
                         onClick={() => {
@@ -195,7 +193,6 @@ const LoginPage = ({ csrfToken }) => {
 };
 
 LoginPage.getInitialProps = async (context) => {
-
     const { req, res } = context;
     const session = await getSession(req);
 

@@ -9,8 +9,8 @@ import Link from "next/link";
 
 const profilePage = (props) => {
     const { data: session, status } = useSession();
-    const { name, email, password, recordings } = props.user;
-    if (!session) {
+
+    if (!session || status === "unauthenticated") {
         return (
             <section className="flex items-center justify-center w-full h-full absolute left-0 top-0 flex-col">
                 <h1 className="p-10">Unauthorized</h1>
@@ -22,6 +22,7 @@ const profilePage = (props) => {
             </section>
         );
     }
+    const { name, email, password, recordings } = props.user;
     console.log(session.user);
 
     return (
@@ -89,6 +90,11 @@ const profilePage = (props) => {
                                 Chapter progression:
                             </p>
                         </div>
+                        <h1>
+                            <button onClick={() => signOut()}>
+                                {session.user.name}
+                            </button>
+                        </h1>
                     </section>
                 </div>
             </main>
@@ -100,8 +106,11 @@ export async function getServerSideProps(ctx) {
     const { req, res } = ctx;
 
     const secret = process.env.SECRET;
-    const token = await getToken({ req, secret });
 
+    const token = await getToken({ req, secret });
+    if (!token) {
+        return { props: {} };
+    }
     const email = token.email;
 
     const user = await client.fetch(getUserByEmailQuery, {
@@ -118,8 +127,6 @@ export async function getServerSideProps(ctx) {
             }
           }`,
     });
-
-
 
     return {
         props: { user: data.User }, // will be passed to the page component as props

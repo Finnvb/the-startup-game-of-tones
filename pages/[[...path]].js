@@ -12,7 +12,7 @@ const components = { DefaultLayout, ColoredText };
 
 const Page = ({ props }) => {
     const { data: session, status } = useSession();
-    const { title, color, content } = props;
+    const { title, color, content, config } = props;
 
     if (!session) {
         return (
@@ -28,10 +28,7 @@ const Page = ({ props }) => {
     }
     return (
         <Les sideBarTitle={title} type={color}>
-            <h1>
-                <button onClick={() => signOut()}>{session.user.name}</button>
-            </h1>
-            <MDXRemote {...content} components={components} />
+            <MDXRemote {...content} components={components} config={config} />
         </Les>
     );
 };
@@ -154,6 +151,7 @@ export async function getStaticProps({ params }) {
                     title: content.title,
                     color: content.color,
                     content: serialized,
+                    config: "yeye",
                 }; // get content of intro of volume
                 break;
         }
